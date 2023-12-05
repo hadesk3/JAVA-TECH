@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Telosys Database Repository --><root>
+    <tableList databaseId="0" databaseName="MYSQL" databaseProductName="MySQL" generation="2023-11-03 16:09:24">
+        <table catalog="ckcnjv" databaseComment="" databaseType="TABLE" javaBean="Users" name="users" schema="">
+            <column dbComment="" dbDefaultValue="" dbName="id" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="id" javaType="java.lang.Integer" jdbcTypeCode="4" label="Id" notNull="true" selected="true"/>
+            <column dbComment="" dbDefaultValue="" dbName="username" dbNotNull="false" dbPosition="2" dbSize="45" dbTypeName="VARCHAR" inputType="text" javaName="username" javaType="java.lang.String" jdbcTypeCode="12" label="Username" maxLength="45" notNull="false" selected="true"/>
+            <column dbComment="" dbDefaultValue="" dbName="password" dbNotNull="false" dbPosition="3" dbSize="60" dbTypeName="VARCHAR" inputType="text" javaName="password" javaType="java.lang.String" jdbcTypeCode="12" label="Password" maxLength="60" notNull="false" selected="true"/>
+            <column dbComment="" dbDefaultValue="" dbName="role" dbNotNull="false" dbPosition="4" dbSize="45" dbTypeName="VARCHAR" inputType="text" javaName="role" javaType="java.lang.String" jdbcTypeCode="12" label="Role" maxLength="45" notNull="false" selected="true"/>
+            <column dbComment="" dbDefaultValue="" dbName="fullname" dbNotNull="false" dbPosition="5" dbSize="80" dbTypeName="VARCHAR" inputType="text" javaName="fullname" javaType="java.lang.String" jdbcTypeCode="12" label="Fullname" maxLength="80" notNull="false" selected="true"/>
+            <column dbComment="" dbDefaultValue="" dbName="lockedstatus" dbNotNull="false" dbPosition="6" dbSize="10" dbTypeName="VARCHAR" inputType="text" javaName="lockedstatus" javaType="java.lang.String" jdbcTypeCode="12" label="Lockedstatus" maxLength="10" notNull="false" selected="true"/>
+            <column dbComment="" dbDefaultValue="" dbName="inactivitiesstatus" dbNotNull="false" dbPosition="7" dbSize="45" dbTypeName="VARCHAR" inputType="text" javaName="inactivitiesstatus" javaType="java.lang.String" jdbcTypeCode="12" label="Inactivitiesstatus" maxLength="45" notNull="false" selected="true"/>
+        </table>
+    </tableList>
+</root>

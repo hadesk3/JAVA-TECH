@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Admin page</title>
+</head>
+<body>
+	<h1>ADMIN PAGE</h1>
+	
+	
+	<a href="http://localhost:8080/admin-productManager">Product Manage</a>
+
+	   
+     <h2>Account List</h2>
+    <table>
+        <tr>
+            <th>Avatar</th>
+            <th> Full Name</th>
+            <th>Locked Status</th>
+        </tr>
+        <tr th:each="account : ${accounts}">
+            <td>
+                <img th:src="${account.avatar}" width="100" height="100" alt="Avatar">
+            </td>
+                          <td th:text="${account.fullName}"></td>
+                          <td th:text="${account.enabled}"></td>
+				<td>
+                <a th:href="@{/detail-user/{id}(id=${account.id})}" class="btn btn-primary">Detail</a>
+            </td>
+        </tr>
+    </table>
+    
+    
+      <table>
+		
+        <thead>
+            <tr>
+                <th>avatar</th>
+                <th>Product Name</th>
+                <th>Import Price</th>
+                <th>Retail Price</th>
+                <th>Category</th>
+                                <th>EDIT</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+			
+            <tr th:each="product : ${products}">
+				
+				 <td>
+                <img th:src="${product.image}" width="100" height="100" alt="Avatar">
+            </td>
+                <td th:text="${product.productName}"></td>
+                <td th:text="${product.importPrice}"></td>
+                <td th:text="${product.retailPrice}"></td>
+                <td th:text="${product.category}"></td>
+                  <td>
+                    <a th:href="@{/admin/product/edit/{id}(id=${product.id})}">Edit</a>
+                </td>
+
+				 <td>
+                    <form th:action="@{/admin/product/delete/{id}(id=${product.id})}" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
+                    
+                
+			
+									
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+   
+</body>
+</html>

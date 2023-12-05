@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Product Manager</title>
+</head>
+
+
+
+
+<body>
+	<h1>Product Manager</h1>
+	                    <a th:href="@{http://localhost:8080/admin/product/add}">add </a>
+
+	
+	   
+   
+    
+    
+      <table>
+		
+        <thead>
+            <tr>
+                <th>avatar</th>
+                <th>Product Name</th>
+                <th>Import Price</th>
+                <th>Retail Price</th>
+                <th>Category</th>
+                                <th>EDIT</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+			
+            <tr th:each="product : ${products}">
+				
+				 <td>
+                <img th:src="${product.image}" width="100" height="100" alt="Avatar">
+            </td>
+                <td th:text="${product.productName}"></td>
+                <td th:text="${product.importPrice}"></td>
+                <td th:text="${product.retailPrice}"></td>
+                <td th:text="${product.category}"></td>
+                  <td>
+                    <a th:href="@{/admin/product/edit/{id}(id=${product.id})}">Edit</a>
+                </td>
+
+				 <td>
+                    <form th:action="@{/admin/product/delete/{id}(id=${product.id})}" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
+                    
+                
+			
+									
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+   
+</body>
+</html>

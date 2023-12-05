@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>User detail</title>
+</head>
+<body>
+
+
+<table>
+        <tr>
+            <th> Full Name</th>
+            <th>User Name</th>
+            <th>Pass</th>
+            <th>Locked Status</th>
+        </tr>
+        <tr th:each="account : ${user}">
+            
+                          <td th:text="${account.fullName}"></td>
+                          <td th:text="${account.username}"></td>
+                          <td th:text="${account.password}"></td>
+                          <td th:text="${account.enabled}"></td>
+				<td>
+                <a th:href="@{/admin-page}" class="btn btn-primary">Back</a>
+            </td>
+        </tr>
+    </table>
+    
+     
+    	<h2>Handle lock/unlock</h2>
+      <form method="post" action="/handleUser" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="name">Input username to block </label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fas fa-user"></i>
+                  </span>
+                </div>
+                <input id="name" type="text" class="form-control" name = "name" >
+              </div>
+            <div class="form-group">
+              <button class="btn btn-success px-5" type="submit">OKE</button>
+            </div>
+            <div class="form-group">
+            </div>
+            </div>
+          </form>
+</body>
+</html>
