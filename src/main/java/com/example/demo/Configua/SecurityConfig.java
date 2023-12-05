@@ -37,9 +37,11 @@ public class SecurityConfig   {
 		    http
 		        .authorizeHttpRequests((authz) -> authz
 		        .antMatchers("/link/**").permitAll()
-		        .antMatchers("/static/**").permitAll()
+                .antMatchers("/static/**").permitAll()
                 .antMatchers("/uploads/**").permitAll()
-	            .antMatchers("/userLoginFirstTime","/change-pass","/changed-pass","/user-change-pass","/link").permitAll()
+                .antMatchers("/CSS/**").permitAll()
+                .antMatchers("/submit-cart").permitAll()
+	            .antMatchers("/userLoginFirstTime","/change-pass","/changed-pass","/user-change-pass","/link","page-buy-product").permitAll()
 	            .antMatchers("/register").hasAnyRole("ADMIN")
 	            .antMatchers("/sendMail").hasAnyRole("ADMIN")
 	            .antMatchers("/").hasAnyRole("ADMIN")

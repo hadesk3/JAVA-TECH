@@ -6,27 +6,28 @@ import java.util.Set;
 
 
 
+import javax.persistence.*;
 
-@javax.persistence.Entity
-@javax.persistence.Table(name = "users")
+@Entity
+@Table(name = "users")
 public class User {
-    @javax.persistence.Id
-    @javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @javax.persistence.Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @javax.persistence.Column(nullable = false)
+    @Column(nullable = false)
     private String password;
     private String fullName;
     private String avatar;
 
 
-    @javax.persistence.Column(nullable = true)
+    @Column(nullable = true)
     private boolean enabled;
 
-    @javax.persistence.OneToMany(mappedBy = "user", cascade = javax.persistence.CascadeType.ALL, fetch =javax.persistence.FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade =CascadeType.ALL, fetch =FetchType.EAGER)
     private Set<Role> roles;
 
 	public Long getId() {
@@ -98,5 +99,4 @@ public class User {
 	
 
 	
-    // constructors, getters, setters
 }

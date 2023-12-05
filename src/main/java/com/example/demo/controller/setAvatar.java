@@ -31,12 +31,12 @@ import com.example.demo.service.UserService;
 @Controller
 public class setAvatar {
 	
-	   PasswordEncoder passwordEncoder;
 
 	@Autowired
 	ServletContext servletContext;
 	@Autowired
 	UserService userService;
+	@Autowired
 	UserRepo userRepo;
 	@GetMapping("/setAvatar")
 	public String s(Principal principal,Model model)

@@ -1,18 +1,19 @@
 package com.example.demo.model;
 
-
-@javax.persistence.Entity
-@javax.persistence.Table(name = "authorities")
+import javax.persistence.Entity;
+import javax.persistence.*;
+@Entity
+@Table(name = "authorities")
 public class Role {
-  @javax.persistence.Id
-   @javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
+  @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @javax.persistence.ManyToOne
-    @javax.persistence.JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @javax.persistence.Column(nullable = false)
+    @Column(nullable = false)
     private String authority;
 
 	public Long getId() {
