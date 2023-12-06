@@ -45,7 +45,7 @@ public class SecurityConfig   {
 	            .antMatchers("/register").hasAnyRole("ADMIN")
 	            .antMatchers("/sendMail").hasAnyRole("ADMIN")
 	            .antMatchers("/").hasAnyRole("ADMIN")
-	            
+	            .antMatchers("/checkout").hasAnyRole("USER")
 	            .antMatchers("/admin-productManager").hasRole("ADMIN")
 
 	            .antMatchers("/admin-page").hasRole("ADMIN")

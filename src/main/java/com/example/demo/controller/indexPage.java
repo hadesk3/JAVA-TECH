@@ -22,4 +22,6 @@ public class indexPage {
 	    model.addAttribute("username", u.getFullName());
 	    return "index";
 	}
+	
+	
 }

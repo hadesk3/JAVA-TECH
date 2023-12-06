@@ -196,8 +196,7 @@ $.ajax({
     data: JSON.stringify(cartData),
     success: function(response) {
         console.log("Dữ liệu đã được gửi thành công.");
-        // Xử lý phản hồi từ máy chủ nếu cần
-    },
+		window.location.href = '/checkout'},
     error: function(xhr, status, error) {
         console.log("Đã xảy ra lỗi trong quá trình gửi dữ liệu giỏ hàng.");
         console.log("Lỗi:", error);
@@ -208,8 +207,6 @@ $.ajax({
 });
             
            
-	  alert('Dữ liệu giỏ hàng: ' + JSON.stringify(cartData));
-
   
 }
 
