@@ -150,11 +150,7 @@ public class salespeopleChoose {
 		return "redirect:/checkout";
 	}
 	
-	@GetMapping("/process-payment-part1")
-	public String  p(@RequestParam("total")String total) {
-		
-		return "";
-	}
+	
 	
 
 }
