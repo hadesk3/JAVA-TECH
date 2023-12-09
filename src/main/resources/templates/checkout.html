@@ -12,12 +12,23 @@
     <form action="/check-phone" method="POST">
         <label for="phoneNumber">Phone Number:</label>
         <input type="text" id="phoneNumber" name="phoneNumber" required>
+          <input type="hidden" name="total" th:value="${Total}" />
+
         <button type="submit">Checkout</button>
     </form>
 
     <div id="result">
-        <!-- Thông tin tên và địa chỉ sẽ được hiển thị ở đây -->
+		
     </div>
+   
+   <div id = "di" style = "display: none;" >
+	    <form id="paymentForm" action="/process-payment" method="GET">
+    <input type="hidden" name="total" th:value="${Total}" />
+    <button type="submit">Pay</button>
+   </div>
+   
+</form>
+
 <script type="text/javascript" src="/JS/checkout.js"></script>
 	
 	
