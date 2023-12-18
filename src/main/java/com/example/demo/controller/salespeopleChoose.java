@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +98,6 @@ public class salespeopleChoose {
 						total += map2.getTotal();
 					}
 	                
-	                session.removeAttribute("cart");
 	                break; 
 	            }
 	        }
@@ -108,6 +109,7 @@ public class salespeopleChoose {
 	            for ( CartData map2 : cartDataList) {
                 	quantity += map2.getCount();
 					total += map2.getTotal();
+
 				}
 	        }
 	    } else {
@@ -122,9 +124,14 @@ public class salespeopleChoose {
 	}
 	
 	@PostMapping("/check-phone")
-	public ResponseEntity<?> checkout(@RequestParam("phoneNumber") String phoneNumber) {
+	public ResponseEntity<?> checkout(HttpServletResponse responseCookie,@RequestParam("phoneNumber") String phoneNumber) {
 	    Customer customer = customerRepository.findByPhoneNumber(phoneNumber);
+	    
+        Cookie phoneCookie = new Cookie("phone", phoneNumber);
+        phoneCookie.setMaxAge(60 * 20);
+        responseCookie.addCookie(phoneCookie);
 
+        
 	    if (customer != null) {
 	        Map<String, Object> response = new HashMap<>();
 	        response.put("found", true);
