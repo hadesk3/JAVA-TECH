@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Include Highcharts library -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+<body>
+	
+	
+	    <div id="salesChart"></div>
+
+	
+	 <script>
+        // Retrieve orders from Thymeleaf model
+        var orders = /*[[${orders}]]*/ [];
+
+        // Process orders data and create series for Highcharts
+        var seriesData = [];
+        orders.forEach(function(order) {
+            seriesData.push({
+                name: 'Order ' + order.id,
+                y: order.totalAmount
+            });
+        });
+
+        // Highcharts configuration
+        Highcharts.chart('salesChart', {
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'Sales Data'
+            },
+            xAxis: {
+                categories: orders.map(function(order) {
+                    return 'Order ' + order.id;
+                })
+            },
+            yAxis: {
+                title: {
+                    text: 'Total Amount'
+                }
+            },
+            series: [{
+                name: 'Total Amount',
+                data: seriesData
+            }]
+        });
+    </script>
+</body>
+</html>

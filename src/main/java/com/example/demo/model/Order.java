@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -29,9 +30,12 @@ public class Order {
         joinColumns = @JoinColumn(name = "order_id"),
         inverseJoinColumns = @JoinColumn(name = "product_id")
     )
+    
     private List<Product> products;
     
     private Integer quantity;
+
+    private LocalDate purchaseDate;
 
     public Order()
     {
@@ -66,6 +70,12 @@ public class Order {
 	}
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+	public LocalDate getPurchaseDate() {
+		return purchaseDate;
+	}
+	public void setPurchaseDate(LocalDate purchaseDate) {
+		this.purchaseDate = purchaseDate;
 	}
     
     

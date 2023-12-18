@@ -157,10 +157,12 @@ public class PaymentController {
 					order.setCustomer(customer);
 					order.setQuantity(quantity);
 					order.setProducts(list_prList);
+					order.setPurchaseDate(currentDate);
 					orderRepo.save(order);	
 					long countRows = purchaseRepo.count();
 		            String filePath = "./src/main/resources/static/uploads/" +"invoice "+ countRows+".pdf";
 
+		            
 					Invoice invoice = new Invoice();
 					invoice.setCustomerName(customer.getName());
 					invoice.setDate(currentDate+"");
@@ -168,6 +170,7 @@ public class PaymentController {
 					invoice.setItems(invoiceItem);
 					invoice.setQuantity(quantity+"");
 					invoice.setTotal(total_2 +"");
+					invoice.setStaff(princ.getName());
 					createInvoicePdf(filePath, invoice);
 		    }
 		   
@@ -292,6 +295,7 @@ public class PaymentController {
         document.add(new Paragraph("============================="));
         document.add(new Paragraph("Total quantity: "+ invoice.getQuantity()));
         document.add(new Paragraph("Total money: "+ invoice.getTotal()));
+        document.add(new Paragraph("Person in charge: "+ invoice.getStaff()));
 
 
         // Close the document

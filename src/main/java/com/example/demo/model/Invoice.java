@@ -1,13 +1,6 @@
 package com.example.demo.model;
 
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +11,7 @@ public class Invoice {
 	    private List<InvoiceItem> items;
 	    private String quantity;
 	    private String total;
+	    private String staff;
 
 	    // Constructors, getters, and setters
 	    public Invoice()
@@ -79,6 +73,12 @@ public class Invoice {
 		}
 		public void setTotal(String total) {
 			this.total = total;
+		}
+		public String getStaff() {
+			return staff;
+		}
+		public void setStaff(String staff) {
+			this.staff = staff;
 		}
 	    
 
