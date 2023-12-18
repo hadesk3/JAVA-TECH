@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
@@ -34,6 +36,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.example.demo.VNPAY.Config;
 import com.example.demo.model.CartData;
 import com.example.demo.model.Customer;
+import com.example.demo.model.Invoice;
+import com.example.demo.model.InvoiceItem;
 import com.example.demo.model.Order;
 import com.example.demo.model.Product;
 import com.example.demo.model.Purchase;
@@ -43,6 +47,11 @@ import com.example.demo.reposity.OrderRepo;
 import com.example.demo.reposity.ProductRepo;
 import com.example.demo.reposity.PurchaseRepo;
 import com.example.demo.service.UserService;
+import com.itextpdf.io.IOException;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
 
 
 @Controller
@@ -60,7 +69,7 @@ public class PaymentController {
 	private ProductRepo productRepo; 
 	
 	@GetMapping("/process-payment")
-	public String submitOrder(HttpServletResponse response,@RequestParam("total") String total, HttpSession session,HttpServletRequest request, Principal princ) {
+	public String submitOrder(HttpServletResponse response,@RequestParam("total") String total, HttpSession session,HttpServletRequest request, Principal princ) throws IOException, FileNotFoundException {
 		if(total != null)
 		{
 			String phoneNumber = "";
@@ -133,9 +142,15 @@ public class PaymentController {
 					purchaseRepo.save(purchase);
 					
 					List<Product> list_prList = new ArrayList<>();
+					List<InvoiceItem> invoiceItem = new ArrayList<>();
 					for(int i = 0; i < list_cart_data.size(); i++)
 					{
 						Product p = productRepo.findByProductName(list_cart_data.get(i).getName());
+						InvoiceItem inv= new InvoiceItem();
+						inv.setName(p.getProductName());
+						inv.setPrice(p.getRetailPrice());
+						inv.setQuantity(list_cart_data.get(i).getCount());
+						invoiceItem.add(inv);
 						list_prList.add(p);
 					}
 					Order order = new Order();
@@ -143,6 +158,17 @@ public class PaymentController {
 					order.setQuantity(quantity);
 					order.setProducts(list_prList);
 					orderRepo.save(order);	
+					long countRows = purchaseRepo.count();
+		            String filePath = "./src/main/resources/static/uploads/" +"invoice "+ countRows+".pdf";
+
+					Invoice invoice = new Invoice();
+					invoice.setCustomerName(customer.getName());
+					invoice.setDate(currentDate+"");
+					invoice.setInvoiceNumber("0000" + countRows);
+					invoice.setItems(invoiceItem);
+					invoice.setQuantity(quantity+"");
+					invoice.setTotal(total_2 +"");
+					createInvoicePdf(filePath, invoice);
 		    }
 		   
 		    return "redirect:/payment?price=" + total;
@@ -239,4 +265,37 @@ public class PaymentController {
             return "pay-success"; // Return the error view for other response codes or transaction statuses
         
     }
+    
+    
+    private static void createInvoicePdf(String filePath, Invoice invoice) throws IOException, FileNotFoundException {
+       
+        // Create PdfDocument and PdfWriter
+        PdfDocument pdf = new PdfDocument(new PdfWriter(new File(filePath)));
+
+        // Create Document
+        Document document = new Document(pdf);
+
+        // Add content to the PDF
+        document.add(new Paragraph("Invoice"));
+        document.add(new Paragraph("Invoice Number: " + invoice.getInvoiceNumber()));
+        document.add(new Paragraph("Customer: " + invoice.getCustomerName()));
+        document.add(new Paragraph("Date: " + invoice.getDate()));
+
+        // Add items to the PDF
+        document.add(new Paragraph("Items:"));
+        for (InvoiceItem item : invoice.getItems()) {
+            document.add(new Paragraph(
+                    String.format("  %s - Quantity: %d, Price: $%.2f", item.getName(), item.getQuantity(), item.getPrice())
+            ));
+        }
+        
+        document.add(new Paragraph("============================="));
+        document.add(new Paragraph("Total quantity: "+ invoice.getQuantity()));
+        document.add(new Paragraph("Total money: "+ invoice.getTotal()));
+
+
+        // Close the document
+        document.close();
+    }
+
 	   }
