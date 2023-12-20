@@ -3,31 +3,106 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f6f6f6;
+    }
+
+    .container-fluid {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    img {
+        display: block;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+
+    input[type="text"], input[type="file"], button[type="submit"] {
+        margin-top: 5px;
+        padding: 8px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+        background-color: #4CAF50;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
 </head>
 <body>
-    <h2> MY ACCOUNT</h2>
-    <form th:action="@{/setAvatar}" method="post" enctype="multipart/form-data">
-       	<input type ="text" name = "name" placeholder="Full name">
-        <input type="file" name="avatar" accept="image/*" required>
-        <button type="submit">Edit</button>
-    </form>
-    
-    
-    
-     <h2>Account List</h2>
-    <table>
-        <tr>
-            <th>Name</th>                     
-            <th>Avatar</th>
-        </tr>
-        <tr th:each="account : ${account}">
-            <td th:text="${account.fullName}"></td>
-            <td>
-                <img th:src="${account.avatar}" width="100" height="100" alt="Avatar">
-            </td>
-            
- 
-        </tr>
-    </table>
+    <div class="container-fluid p-5">
+        <div class="row mb-5">
+            <div class="col-md-6 text-right">
+         <h1>Welcome: <span  th:text="${username}"></span></h1>
+                <form id="logoutForm" action="/logout" method="post">
+                    <button type="submit">Logout</button>
+                </form>
+            </div>
+        </div>
+        <h2>MY ACCOUNT</h2>
+        <form th:action="@{/setAvatar}" method="post" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder="Full name">
+            <input type="file" name="avatar" accept="image/*" required>
+            <button type="submit">Edit</button>
+        </form>
+        <h2>Account List</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Avatar</th>
+            </tr>
+            <tr th:each="account : ${account}">
+                <td th:text="${account.fullName}"></td>
+                <td>
+                    <img th:src="${account.avatar}" width="100" height="100" alt="Avatar">
+                </td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>

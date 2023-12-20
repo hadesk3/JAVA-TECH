@@ -2,15 +2,134 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Include Highcharts library -->
-    <script src="https://code.highcharts.com/highcharts.js"></script>
+ <meta charset="utf-8">
+        <meta charset="utf-8">
+        <title>Fruitables - Vegetable Website Template</title>
+ 
+            <script src="https://code.highcharts.com/highcharts.js"></script>
+
 </head>
+<style>
+	
+	.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f1f1;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar li {
+    float: left;
+}
+
+.navbar li a {
+    display: block;
+    color: #333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.navbar li a:hover {
+    background-color: #ddd;
+}
+
+/* Optional: Add margin between navbar items */
+.navbar li:not(:last-child) {
+    margin-right: 10px;
+}
+</style>
 <body>
 	
 	
-	    <div id="salesChart"></div>
-
 	
-	 <script>
+
+<nav>
+        <ul class="navbar">
+            <li><a href="/index">Home</a></li>
+            <li><a href="/page-buy-product">Buy Products</a></li>
+            <li><a href="/admin-page">Admin page</a></li>
+        </ul>
+    </nav>
+	<form method="post" action="/graph">
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" name="startDate" required>
+    
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" name="endDate" required>
+   
+    
+    <button type="submit">Find</button>
+	</form>
+	
+	
+	
+	
+	  <div id="barChart"></div>
+
+    <script th:inline="javascript">
+        // Retrieve data from Thymeleaf model
+        var totals = /*[[${totals}]]*/ [];
+
+        // Highcharts configuration for the bar chart
+        Highcharts.chart('barChart', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Summary Total Amount'
+            },
+            xAxis: {
+                categories: ['Total Amount', 'Total profit']
+            },
+            yAxis: {
+                title: {
+                    text: 'Values'
+                }
+            },
+            series: [{
+                name: 'Values',
+                data: totals
+            }]
+        });
+    </script>
+    	  <div id="barChart2"></div>
+
+    
+      <script th:inline="javascript">
+        // Retrieve data from Thymeleaf model
+        var totals = /*[[${totals2}]]*/ [];
+
+        // Highcharts configuration for the bar chart
+        Highcharts.chart('barChart2', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Summary Data'
+            },
+            xAxis: {
+                categories: ['Total Order', 'Total Quantity of Product']
+            },
+            yAxis: {
+                title: {
+                    text: 'Values'
+                }
+            },
+            series: [{
+                name: 'Values',
+                data: totals
+            }]
+        });
+    </script>
+    
+	<div id="salesChart"></div>
+
+    <script th:inline="javascript">
         // Retrieve orders from Thymeleaf model
         var orders = /*[[${orders}]]*/ [];
 
@@ -19,7 +138,7 @@
         orders.forEach(function(order) {
             seriesData.push({
                 name: 'Order ' + order.id,
-                y: order.totalAmount
+                y: order.quantity  // Assuming 'quantity' is the field you want to display
             });
         });
 
@@ -38,14 +157,17 @@
             },
             yAxis: {
                 title: {
-                    text: 'Total Amount'
+                    text: 'Quantity of product'
                 }
             },
             series: [{
-                name: 'Total Amount',
+                name: 'Quantity of product',
                 data: seriesData
             }]
         });
     </script>
+  
+    
+
 </body>
 </html>

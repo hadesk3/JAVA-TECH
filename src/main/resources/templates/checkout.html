@@ -5,31 +5,58 @@
 
 </head>
 <body>
-    <h1>Checkout</h1>
-      <h2>Total: <span th:text="${Total}"></span></h2>
+    <h1 style="text-align: center;">Checkout</h1>
+    <h2>Total: <span th:text="${Total}"></span></h2>
     <h2>Quantity: <span th:text="${Quantity}"></span></h2>
 
-    <form action="/check-phone" method="POST">
+    <form action="/check-phone" method="POST" style="text-align: center;">
         <label for="phoneNumber">Phone Number:</label>
         <input type="text" id="phoneNumber" name="phoneNumber" required>
-          <input type="hidden" name="total" th:value="${Total}" />
+        <input type="hidden" name="total" th:value="${Total}" />
 
-        <button type="submit">Checkout</button>
+        <button type="submit" style="padding: 0.5rem 1rem;">Checkout</button>
     </form>
 
-    <div id="result">
-		
-    </div>
+    <div id="result"></div>
    
-   <div id = "di" style = "display: none;" >
-	    <form id="paymentForm" action="/process-payment" method="GET">
-    <input type="hidden" name="total" th:value="${Total}" />
-    
-    <button type="submit">Pay</button>
-   </div>
+    <div id="di" style="display: none; text-align: center;">
+        <form id="paymentForm" action="/process-payment" method="GET">
+            <input type="hidden" name="total" th:value="${Total}" />
+            <button type="submit" style="padding: 0.5rem 1rem;">Pay</button>
+        </form>
+    </div>
    
 </form>
 
+<form id="paymentForm" action="/checkout" method="GET" style="text-align: center;">    
+    <button type="submit" style="padding: 0.5rem 1rem;">See order</button>
+</form>
+
+<h1 style="text-align: center;">Orders</h1>
+<table style="margin: 0 auto;">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Products</th>
+            <th>Quantity</th>
+            <th>Purchase Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.customer.name}"></td>
+            <td>
+                <ul>
+                    <li th:each="product : ${order.products}" th:text="${product.productName}"></li>
+                </ul>
+            </td>
+            <td th:text="${order.quantity}"></td>
+            <td th:text="${order.purchaseDate}"></td>
+        </tr>
+    </tbody>
+</table>
 <script type="text/javascript" src="/JS/checkout.js"></script>
 	
 	

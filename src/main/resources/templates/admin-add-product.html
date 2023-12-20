@@ -2,10 +2,61 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Add Product</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f6f6;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
     <h1>Add Product</h1>
-    <form  th:action="@{/admin/productManager/add}" th:object="${product}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/admin/productManager/add}" th:object="${product}" method="post" enctype="multipart/form-data">
         <label for="barcode">Barcode:</label>
         <input type="text" id="barcode" name="barcode" th:field="*{barcode}" required>
         <br>
@@ -21,9 +72,7 @@
         <label for="category">Category:</label>
         <input type="text" id="category" name="category" th:field="*{category}" required>
         <br>
-        
-                        <input type="file" name="avatar" accept="image/*" required>
-
+        <input type="file" name="avatar" accept="image/*" required>
         <input type="submit" value="Add Product">
     </form>
 </body>

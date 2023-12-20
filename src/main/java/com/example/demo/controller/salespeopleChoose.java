@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.model.CartData;
 import com.example.demo.model.Customer;
+import com.example.demo.model.Order;
 import com.example.demo.model.Product;
 import com.example.demo.model.Purchase;
 import com.example.demo.model.User;
@@ -78,7 +80,7 @@ public class salespeopleChoose {
 	
 	}
 	@GetMapping("/checkout")
-	public String checkout(HttpSession session, Principal princ, Model model) {
+	public String checkout(HttpSession session, Principal princ, Model model, HttpServletRequest request) {
 	   int total = 0;
 	   int quantity=0;
 		User user = userService.findbyUsername(princ.getName());
@@ -116,6 +118,21 @@ public class salespeopleChoose {
 	        System.out.println("Không có gì trong session");
 	    }
 	    	
+	    String phoneNumber = "";
+		Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("phone".equals(cookie.getName())) {
+                     phoneNumber = cookie.getValue();
+                    System.out.println("Phone Number: " + phoneNumber);
+                }
+            }
+        }
+        Customer c = customerRepository.findByPhoneNumber(phoneNumber);
+      
+        List<Order> list_order = orderRepository.findByCustomer(c);
+        model.addAttribute("orders", list_order);
 	    model.addAttribute("Total", total);
 	    model.addAttribute("Quantity", quantity);
 	    
@@ -137,6 +154,7 @@ public class salespeopleChoose {
 	        response.put("found", true);
 	        response.put("fullName", customer.getName());
 	        response.put("address", customer.getAddress());
+	        
 	        return ResponseEntity.ok(response);
 	    } else {
 	        Map<String, Object> response = new HashMap<>();
@@ -156,6 +174,8 @@ public class salespeopleChoose {
 		customerRepository.save(c);
 		return "redirect:/checkout";
 	}
+	
+
 	
 	
 	

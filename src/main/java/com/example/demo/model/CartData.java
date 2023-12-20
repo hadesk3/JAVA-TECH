@@ -1,4 +1,5 @@
 package com.example.demo.model;
+
 public class CartData {
     private String id;
     private String name;

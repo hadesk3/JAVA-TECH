@@ -7,6 +7,13 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -18,6 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -36,15 +44,19 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.example.demo.VNPAY.Config;
 import com.example.demo.model.CartData;
 import com.example.demo.model.Customer;
+import com.example.demo.model.GetInvoice;
 import com.example.demo.model.Invoice;
 import com.example.demo.model.InvoiceItem;
 import com.example.demo.model.Order;
 import com.example.demo.model.Product;
+import com.example.demo.model.Profit;
 import com.example.demo.model.Purchase;
 import com.example.demo.model.User;
 import com.example.demo.reposity.CustomerRepo;
+import com.example.demo.reposity.GetInvoiceRepo;
 import com.example.demo.reposity.OrderRepo;
 import com.example.demo.reposity.ProductRepo;
+import com.example.demo.reposity.ProfitRepo;
 import com.example.demo.reposity.PurchaseRepo;
 import com.example.demo.service.UserService;
 import com.itextpdf.io.IOException;
@@ -67,7 +79,10 @@ public class PaymentController {
 	private CustomerRepo customerRepo;
 	@Autowired
 	private ProductRepo productRepo; 
-	
+	@Autowired
+	GetInvoiceRepo getInvoiceRepo;
+	@Autowired
+	ProfitRepo profitRepo;
 	@GetMapping("/process-payment")
 	public String submitOrder(HttpServletResponse response,@RequestParam("total") String total, HttpSession session,HttpServletRequest request, Principal princ) throws IOException, FileNotFoundException {
 		if(total != null)
@@ -142,6 +157,10 @@ public class PaymentController {
 					purchaseRepo.save(purchase);
 					
 					List<Product> list_prList = new ArrayList<>();
+					int totalProfit = 0;
+					
+					
+					
 					List<InvoiceItem> invoiceItem = new ArrayList<>();
 					for(int i = 0; i < list_cart_data.size(); i++)
 					{
@@ -152,7 +171,16 @@ public class PaymentController {
 						inv.setQuantity(list_cart_data.get(i).getCount());
 						invoiceItem.add(inv);
 						list_prList.add(p);
+						
+						totalProfit += list_cart_data.get(i).getCount() *(p.getRetailPrice()-p.getImportPrice());
 					}
+					System.out.println("total profit ="+totalProfit);
+					
+					Profit profit = new Profit();
+					profit.setProfit(totalProfit);
+					profit.setPurchaseDate(currentDate);
+					profitRepo.save(profit);
+					
 					Order order = new Order();
 					order.setCustomer(customer);
 					order.setQuantity(quantity);
@@ -160,8 +188,15 @@ public class PaymentController {
 					order.setPurchaseDate(currentDate);
 					orderRepo.save(order);	
 					long countRows = purchaseRepo.count();
-		            String filePath = "./src/main/resources/static/uploads/" +"invoice "+ countRows+".pdf";
-
+		            String filePath = "./src/main/resources/static/uploads/" +"invoice"+ countRows+".pdf";
+		            GetInvoice set = new GetInvoice();
+		            String p = "./uploads/" +"invoice"+ countRows+".pdf";
+		            set.setPath(p);
+		            getInvoiceRepo.save(set);
+		            
+		            Cookie pdfcookie = new Cookie("pdf", p);
+		            pdfcookie.setMaxAge(60 * 20);
+		            response.addCookie(pdfcookie);	
 		            
 					Invoice invoice = new Invoice();
 					invoice.setCustomerName(customer.getName());
@@ -302,4 +337,5 @@ public class PaymentController {
         document.close();
     }
 
+    
 	   }

@@ -77,6 +77,7 @@ public class AdminPageProductManage {
 	        Optional<Product> existingProduct = productService.getProductById(id);
 	        if (existingProduct.isPresent()) {
 	            product.setId(id);
+	            product.setImage(existingProduct.get().getImage());
 	            productService.updateProduct(product);
 	        }
 	        return "redirect:/admin-productManager";

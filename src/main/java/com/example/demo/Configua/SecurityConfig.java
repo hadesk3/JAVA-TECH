@@ -50,10 +50,10 @@ public class SecurityConfig   {
 	            .antMatchers("/").hasAnyRole("ADMIN")
 	            .antMatchers("/checkout").hasAnyRole("USER")
 	            .antMatchers("/admin-productManager").hasRole("ADMIN")
-
+	            .antMatchers("/invoice").hasAnyRole("USER")
 	            .antMatchers("/admin-page").hasRole("ADMIN")
 	          
-
+	            .antMatchers("/analysis").hasRole("ADMIN")
 	            
 	            .antMatchers("/detail-user/**").hasRole("ADMIN")
 	            .antMatchers("/admin/product/edit/**").hasRole("ADMIN")
