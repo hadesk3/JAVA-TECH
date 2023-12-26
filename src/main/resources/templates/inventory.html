@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Inventory</title>
+</head>
+<body>
+	
+	
+	<div class="row">
+      <nav class="top-bar" data-topbar>
+        <ul class="title-area">
+            <li><a href="/admin-page">Admin Page</a></li>
+
+        </ul>
+        <section class="top-bar-section">
+          <ul class="left">
+            <li><a href="/index">Main Page</a></li>
+          </ul>
+        </section>
+      </nav>
+</div>
+	<a th:href="@{/admin/add-inventory}" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: #fff; text-decoration: none; border-radius: 4px;">Add inventory</a>
+
+		
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Size</th>
+        <th>Color</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Last Order Date</th>
+        <th>Last Ship Date</th>
+    </tr>
+    <tr th:each="product : ${productList}">
+        <td th:text="${product.id}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.size}"></td>
+        <td th:text="${product.color}"></td>
+        <td th:text="${product.quantity}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${#dates.format(product.dateLastOrder, 'yyyy-MM-dd')}"></td>
+        <td th:text="${#dates.format(product.dateLastShip, 'yyyy-MM-dd')}"></td>
+         <td>
+            <a th:href="@{/admin/edit-inventory/{id}(id=${product.id})}">Edit</a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

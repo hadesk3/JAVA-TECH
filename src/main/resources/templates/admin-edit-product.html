@@ -54,6 +54,20 @@
     </style>
 </head>
 <body>
+	
+	<div class="row">
+      <nav class="top-bar" data-topbar>
+        <ul class="title-area">
+            <li><a href="/admin-page">Admin Page</a></li>
+
+        </ul>
+        <section class="top-bar-section">
+          <ul class="left">
+            <li><a href="/index">Main Page</a></li>
+          </ul>
+        </section>
+      </nav>
+</div>
     <h1>Edit Product</h1>
     <form th:action="@{/admin/product/edit/{id}(id=${product.id})}" th:object="${product}" method="post">
         <label for="barcode">Barcode:</label>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Product</title>
+    <title>Edit Inventory</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,8 +28,7 @@
         }
 
         input[type="text"],
-        input[type="number"],
-        input[type="file"] {
+        input[type="number"] {
             width: 100%;
             padding: 8px;
             border: 1px solid #ccc;
@@ -55,6 +54,7 @@
     </style>
 </head>
 <body>
+	
 	<div class="row">
       <nav class="top-bar" data-topbar>
         <ul class="title-area">
@@ -68,28 +68,21 @@
         </section>
       </nav>
 </div>
-    <h1>Add Product</h1>
-    <form th:action="@{/admin/productManager/add}" th:object="${product}" method="post" enctype="multipart/form-data">
-		  <label for="barcode">id inventory:</label>
-        <input type="text" id="barcode" name="barcode" th:field="*{id_inventory}" required>
-        <br>
-        <label for="barcode">Barcode:</label>
-        <input type="text" id="barcode" name="barcode" th:field="*{barcode}" required>
-        <br>
-        <label for="productName">Product Name:</label>
-        <input type="text" id="productName" name="productName" th:field="*{productName}" required>
-        <br>
-        <label for="importPrice">Import Price:</label>
-        <input type="number" id="importPrice" name="importPrice" th:field="*{importPrice}" step="0.01" required>
-        <br>
-        <label for="retailPrice">Retail Price:</label>
-        <input type="number" id="retailPrice" name="retailPrice" th:field="*{retailPrice}" step="0.01" required>
-        <br>
-        <label for="category">Category:</label>
-        <input type="text" id="category" name="category" th:field="*{category}" required>
-        <br>
-        <input type="file" name="avatar" accept="image/*" required>
-        <input type="submit" value="Add Product">
+    <h1>Edit inventory</h1>
+    <form th:action="@{/admin/inventory/edit/{id}(id=${product.id})}" th:object="${product}" method="post">
+      
+        
+        
+   
+        
+    <label style="display: block; margin-bottom: 8px;">Size: <input type="text" th:field="*{size}" style="width: 100%; padding: 8px;" /></label>
+    <label style="display: block; margin-bottom: 8px;">Color: <input type="text" th:field="*{color}" style="width: 100%; padding: 8px;" /></label>
+    <label style="display: block; margin-bottom: 8px;">Quantity: <input type="number" th:field="*{quantity}" style="width: 100%; padding: 8px;" /></label>
+    <label style="display: block; margin-bottom: 8px;">Price: <input type="number"  step="0.1"th:field="*{price}" style="width: 100%; padding: 8px;" /></label>
+    <input type="submit" value="Add Product" style="width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        
+        
+        
     </form>
 </body>
 </html>

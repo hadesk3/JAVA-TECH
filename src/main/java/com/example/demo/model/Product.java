@@ -14,6 +14,7 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 
 	private Long id;
+	private Long id_inventory;
     private String barcode;
     private String productName;
     private double importPrice;
@@ -98,9 +99,20 @@ public class Product {
 	public void setImage(String image) {
 		this.image = image;
 	}
+	
+		public Long getId_inventory() {
+		return id_inventory;
+	}
 
-	public Product(Long id, String barcode, String productName, double importPrice, double retailPrice, String category,
+
+	public void setId_inventory(Long id_inventory) {
+		this.id_inventory = id_inventory;
+	}
+
+
+		public Product(Long id,Long idInvent, String barcode, String productName, double importPrice, double retailPrice, String category,
 			Date creationDate, String image) {
+			this.id_inventory = idInvent;
 		this.id = id;
 		this.barcode = barcode;
 		this.productName = productName;

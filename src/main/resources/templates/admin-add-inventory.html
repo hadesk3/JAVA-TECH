@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add inventory</title>
+</head>
+<body>
+
+<div class="row">
+      <nav class="top-bar" data-topbar>
+        <ul class="title-area">
+            <li><a href="/admin-page">Admin Page</a></li>
+
+        </ul>
+        <section class="top-bar-section">
+          <ul class="left">
+            <li><a href="/index">Main Page</a></li>
+          </ul>
+        </section>
+      </nav>
+</div>
+<h2>Add inventory</h2>
+
+<form th:action="@{/admin/add-inventory-save}" th:object="${product}" method="post" style="max-width: 400px; margin: auto;">
+
+    <label style="display: block; margin-bottom: 8px;">Name: <input type="text" th:field="*{name}" style="width: 100%; padding: 8px;" /></label>
+    <label style="display: block; margin-bottom: 8px;">Size: <input type="text" th:field="*{size}" style="width: 100%; padding: 8px;" /></label>
+    <label style="display: block; margin-bottom: 8px;">Color: <input type="text" th:field="*{color}" style="width: 100%; padding: 8px;" /></label>
+    <label style="display: block; margin-bottom: 8px;">Quantity: <input type="number" th:field="*{quantity}" style="width: 100%; padding: 8px;" /></label>
+    <label style="display: block; margin-bottom: 8px;">Price: <input type="number"  step="0.1"th:field="*{price}" style="width: 100%; padding: 8px;" /></label>
+    <input type="submit" value="Add Product" style="width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+</form>
+
+
+</body>
+</html>
